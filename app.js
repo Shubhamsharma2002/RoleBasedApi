@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import router from "./Src/Routes/index.js";
 
 
 // server by express
@@ -15,7 +16,7 @@ server.use(
     Credential: true,
   })
 );
-
+server.use('/api/v1', router);
 
 server.get("/", (req, res) => {
   return res.send("Server is fired successfully :---:)");
