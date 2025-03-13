@@ -26,5 +26,21 @@ export const register = async(req,res)=>{
 
 export const login = async(req,res)=>{
     const {email ,password} = req.body;
-    
+     
+    const user = await User.findOne({email});
+    if(!user){
+        return res.status(400).json("invalid credential");
+    }
+    const matchPassword = await bcrypt.compare(password,user.password);
+    if(!matchPassword){
+        return res.status(400).json("invalid credential");
+    }
+    const token = Jwt.sign(
+        {id:user._id , role: user.role},
+         process.env.SECERETE,
+         {expiresIn:"1hr"}
+    );
+    return res.status(200)
+    .cookie("token",token,{maxAge:1*24*60*60*1080, httpsOnly:true,sameSite:'strict'})
+    .json(200,`welcome back ${user.name}`);
 }
