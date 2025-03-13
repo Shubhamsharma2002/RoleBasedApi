@@ -1,6 +1,7 @@
-import sendEmail from "../Middleware/mailer.js";
+import sendEmail from "../utils/mailer.js";
 import { User } from "../Models/userModel.js";
 import bcrypt from "bcryptjs";
+import Jwt from 'jsonwebtoken';
 export const register = async(req,res)=>{
      try {
           const {name,email ,role,password} = req.body;

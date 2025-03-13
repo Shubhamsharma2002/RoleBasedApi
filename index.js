@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 import {server} from './app.js';
 import connectDB from './Src/Db/dbConnection.js';
-import sendEmail from './Src/Middleware/mailer.js';
+import sendEmail from './Src/utils/mailer.js';
 
 // port of the project
 
