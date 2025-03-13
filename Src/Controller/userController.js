@@ -1,5 +1,6 @@
-import { User } from "../Models/userModel";
-
+import sendEmail from "../Middleware/mailer.js";
+import { User } from "../Models/userModel.js";
+import bcrypt from "bcryptjs";
 export const register = async(req,res)=>{
      try {
           const {name,email ,role,password} = req.body;
@@ -17,7 +18,18 @@ export const register = async(req,res)=>{
             role,
             password:hashedPassword
         })
-        return res.status(201).json(user,"registered sucessfully");
+      await sendEmail(email, 'Registration Sucessfully',`${name} You are sucessfuly registred with the team`,"registion scusessfull");
+      return res.status(201).json({
+        message: 'User registered successfully',
+        user: {
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          id: user._id,
+        },
+      });
+      
+        
      } catch (error) {
         console.log(error);
         
@@ -43,4 +55,21 @@ export const login = async(req,res)=>{
     return res.status(200)
     .cookie("token",token,{maxAge:1*24*60*60*1080, httpsOnly:true,sameSite:'strict'})
     .json(200,`welcome back ${user.name}`);
+}
+
+export const logout = async (req,res)=>{
+    try {
+       return res.status(200)
+       .cookie("token","",{maxAge:0})
+      //  .json({
+      //      message:"Logout successfully",
+      //      success:true
+      //  })
+      .json(
+        "Logout successfully"
+       )
+    } catch (error) {
+      console.log("error in logout block", error);
+      
+    }
 }
