@@ -2,7 +2,7 @@ import { User } from "../Models/userModel";
 
 export const register = async(req,res)=>{
      try {
-          const {name,email ,role} = req.body;
+          const {name,email ,role,password} = req.body;
           if(!name || !email || !role){
              return res.status(400).json("All feild are required");
           }
@@ -22,4 +22,9 @@ export const register = async(req,res)=>{
         console.log(error);
         
      }
+}
+
+export const login = async(req,res)=>{
+    const {email ,password} = req.body;
+    
 }
