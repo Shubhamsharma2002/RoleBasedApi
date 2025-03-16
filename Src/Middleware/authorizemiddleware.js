@@ -4,6 +4,7 @@ const authorizerole = (...allowedRoles) =>{
             return res.status(403).json({message:"acess denied"});
         }
         next();
+        
     }
 }
 
