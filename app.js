@@ -16,6 +16,7 @@ server.use(
     Credential: true,
   })
 );
+// v1 api are
 server.use('/api/v1', router);
 
 server.get("/", (req, res) => {
