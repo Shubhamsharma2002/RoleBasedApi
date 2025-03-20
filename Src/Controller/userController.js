@@ -2,6 +2,7 @@ import sendEmail from "../utils/mailer.js";
 import { User } from "../Models/userModel.js";
 import bcrypt from "bcryptjs";
 import Jwt from 'jsonwebtoken';
+import { ApiResponse } from "../Middleware/apiResponse.js";
 export const register = async(req,res)=>{
      try {
           const {name,email ,role,password} = req.body;
@@ -20,16 +21,19 @@ export const register = async(req,res)=>{
             password:hashedPassword
         })
       await sendEmail(email, 'Registration Sucessfully',`${name} You are sucessfuly registred with the team`,"registion scusessfull");
-      return res.status(201).json({
-        message: 'User registered successfully',
-        user: {
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          id: user._id,
-        },
-      });
+      // return res.status(201).json({
+      //   message: 'User registered successfully',
+      //   user: {
+      //     name: user.name,
+      //     email: user.email,
+      //     role: user.role,
+      //     id: user._id,
+      //   },
+      // });
       
+      return res.status(201).json(
+        new ApiResponse(201, user,"Registration sucessfully")
+     )
         
      } catch (error) {
         console.log(error);
